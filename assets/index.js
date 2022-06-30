@@ -24,12 +24,12 @@ const dataProcess = (res, w) =>{
     let definitions = res[0].meanings[0].definitions[0];
     console.log({definitions})
     phonetics = `Commonly pronounced as: ${res[0].phonetics[0].text}`;
-
+    let audio = new Audio (res[0].phonetics[0].audio);
     document.querySelector(".word p").innerText = res[0].word;
     document.querySelector(".word span").innerText = phonetics;
     document.querySelector(".meaning span").innerText = definitions.definition;
     document.querySelector(".example span").innerText = definitions.example ?? `Sorry. Unavailable`;
-    document.querySelector(".list").innerText = definitions.synonym ?? `Unavailable!`;
+    document.querySelector(".list").innerText = res[0].meanings[0].synonyms ?? `Unavailable!`;
 
   }
 
@@ -47,4 +47,10 @@ removeIcon.addEventListener("click", () => {
   wrapper.classList.remove("active");
   infoText.style.color = "#000";
   infoText.innerHTML = "Type any existing word and press enter to get meaning, example,synonyms, etc.";
+})
+
+document.querySelector("#playSound").addEventListener("click", () => {
+  if(audio){
+    audio.play();
+  } 
 })
