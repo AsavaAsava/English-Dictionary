@@ -22,9 +22,15 @@ const dataProcess = (res, w) =>{
   } else{
     wrapper.classList.add("active");
     let definitions = res[0].meanings[0].definitions[0];
+    console.log({definitions})
     phonetics = `Commonly pronounced as: ${res[0].phonetics[0].text}`;
 
     document.querySelector(".word p").innerText = res[0].word;
+    document.querySelector(".word span").innerText = phonetics;
+    document.querySelector(".meaning span").innerText = definitions.definition;
+    document.querySelector(".example span").innerText = definitions.example ?? `Sorry. Unavailable`;
+    document.querySelector(".list").innerText = definitions.synonym ?? `Unavailable!`;
+
   }
 
 }

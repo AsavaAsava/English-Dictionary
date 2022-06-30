@@ -143,6 +143,7 @@ ul li:last-child {
 .synonym .details .list {
   display: flex;
   flex-wrap: wrap;
+  color: #9a9a9a;
 }
 .synonym .details .list span {
   background: none;
