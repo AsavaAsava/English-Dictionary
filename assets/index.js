@@ -11,8 +11,34 @@ function fetchApi(word) {
   infoText.style.color = "#000";
   wrapper.classList.remove("active");
   infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>`;
-  let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
-  fetch(url)
-    .then((res) => res.json())
-    .then((result) => data(result, word));
+  axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+ 
+    .then((result) => dataProcess(result.data, word));
 }
+
+const dataProcess = (res, w) =>{
+  if (res.title){
+    infoText.innerHTML = `Oh No! We cannot find the word: ${w}`;
+  } else{
+    wrapper.classList.add("active");
+    let definitions = res[0].meanings[0].definitions[0];
+    phonetics = `Commonly pronounced as: ${res[0].phonetics[0].text}`;
+
+    document.querySelector(".word p").innerText = res[0].word;
+  }
+
+}
+
+searchInput.addEventListener("keyup", (e) => {
+  if(e.key =="Enter" && e.target.value){
+    fetchApi(e.target.value)
+  }
+})
+
+removeIcon.addEventListener("click", () => {
+  searchInput.value ="";
+  searchInput.focus();
+  wrapper.classList.remove("active");
+  infoText.style.color = "#000";
+  infoText.innerHTML = "Type any existing word and press enter to get meaning, example,synonyms, etc.";
+})
